@@ -1,0 +1,29 @@
+cd blogs_2
+rails g model Comment commentable:references{polymorphic} content:text
+rake db:migrate
+
+rails console
+
+#Create Comments
+Comment.create(commentable: Blog.first, content: "Test comment to blog 1")
+Comment.create(commentable: Post.second, content: "Test comment to post 2")
+Comment.create(commentable: Message.second, content: "Test comment to message 2") 
+Comment.create(commentable: User.find(4), content: "Test comment to message 2")  
+
+#Read Comments
+Blog.first.comments
+Post.second.comments
+Message.second.comments
+User.find(4).comments
+
+#Update Comments
+Blog.first.comments.first.update(content: "Updated comment in Blog 1") 
+Post.second.comments.first.update(content: "Updated comment in Post id 2")   
+Message.second.comments.first.update(content: "Updated comment in Message id 2")      
+User.find(4).comments.first.update(content: "Updated 1st comment for User id 4") 
+
+#Delete Comments
+Blog.first.comments.first.destroy
+Post.second.comments.first.destroy
+Message.second.comments.first.destroy
+User.find(4).comments.first.destroy
